@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UsersService } from '@/http/global/users/users.service';
-import { CreateUserDto } from '@/http/global/users/dto/user.dto';
+import { CreateUserDto, LoginUserDto } from '@/http/global/users/dto/user.dto';
 
 @Injectable()
 export class AuthService {
@@ -9,4 +9,6 @@ export class AuthService {
   async register(user: CreateUserDto) {
     return await this.usersService.createUser(user);
   }
+
+  async login(credentials: LoginUserDto) {}
 }
