@@ -19,6 +19,8 @@ model User {
   password String
   roleId   Int
   role     Role   @relation(fields: [roleId], references: [id])
+  createdAt DateTime @default(now()) 
+  updatedAt DateTime @default(now()) 
 }
 
 model Role {
@@ -26,4 +28,6 @@ model Role {
   name  String
   tag   String @unique
   users User[]
+  createdAt DateTime @default(now()) 
+  updatedAt DateTime @default(now()) 
 }
