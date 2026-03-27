@@ -1,4 +1,4 @@
-import { CreateRoleDto } from '@/admin/roles/entities/role.entity';
+import { CreateRoleDto } from '@/http/global/roles/dto/role.dto';
 
 export const ROLES_PRINCIPAL: CreateRoleDto[] = [
   {
