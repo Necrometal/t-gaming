@@ -5,7 +5,8 @@ import { PrismaModule } from '@/modules/prisma';
 import { AuthModule } from '@/http/auth/auth.module';
 import { UsersModule } from '@/http/global/users/users.module';
 import { HelpersModule } from '@/helpers/helpers.module';
-
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { PrismaExceptionInterceptor } from '@/exceptions/prisma/prisma-exception/prisma-exception.interceptor';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -16,6 +17,11 @@ import { HelpersModule } from '@/helpers/helpers.module';
     HelpersModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: PrismaExceptionInterceptor,
+    },
+  ],
 })
 export class AppModule {}

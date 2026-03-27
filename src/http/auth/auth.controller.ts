@@ -4,6 +4,7 @@ import { RegisterUserDto } from '@/http/global/users/dto/user.dto';
 import { PrismaService } from '@/prisma.service';
 import { RolesService } from '@/http/global/roles/roles.service';
 import { ROLE_USER } from '@/constantes/role';
+import { UniqueError } from '@/helpers/decorator/unique-error/unique-error.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -13,6 +14,7 @@ export class AuthController {
   ) {}
 
   @Post('register')
+  @UniqueError('email')
   async register(@Body() user: RegisterUserDto) {
     // use user role for register user
     const role = await this.rolesService.findRoleByTag(ROLE_USER);
