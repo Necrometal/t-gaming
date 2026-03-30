@@ -4,7 +4,6 @@ import { RolesModule } from '@/http/global/roles/roles.module';
 import { PrismaModule } from '@/modules/prisma';
 import { AuthModule } from '@/http/auth/auth.module';
 import { UsersModule } from '@/http/global/users/users.module';
-import { HelpersModule } from '@/helpers/helpers.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { PrismaExceptionInterceptor } from '@/exceptions/prisma/prisma-exception/prisma-exception.interceptor';
 import { CqrsModule } from '@nestjs/cqrs';
@@ -16,7 +15,6 @@ import { CqrsModule } from '@nestjs/cqrs';
     PrismaModule,
     UsersModule,
     AuthModule,
-    HelpersModule,
   ],
   controllers: [],
   providers: [
