@@ -7,6 +7,7 @@ import { UsersModule } from '@/http/global/users/users.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { PrismaExceptionInterceptor } from '@/exceptions/prisma/prisma-exception/prisma-exception.interceptor';
 import { CqrsModule } from '@nestjs/cqrs';
+import { MailModule } from '@/modules/mail/mail.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -15,6 +16,7 @@ import { CqrsModule } from '@nestjs/cqrs';
     PrismaModule,
     UsersModule,
     AuthModule,
+    MailModule,
   ],
   controllers: [],
   providers: [
