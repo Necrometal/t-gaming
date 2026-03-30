@@ -672,6 +672,7 @@ export type RoleScalarFieldEnum = (typeof RoleScalarFieldEnum)[keyof typeof Role
 export const ValidationCodeScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  code: 'code',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   expiredAt: 'expiredAt'
@@ -710,6 +711,13 @@ export const RoleOrderByRelevanceFieldEnum = {
 } as const
 
 export type RoleOrderByRelevanceFieldEnum = (typeof RoleOrderByRelevanceFieldEnum)[keyof typeof RoleOrderByRelevanceFieldEnum]
+
+
+export const ValidationCodeOrderByRelevanceFieldEnum = {
+  code: 'code'
+} as const
+
+export type ValidationCodeOrderByRelevanceFieldEnum = (typeof ValidationCodeOrderByRelevanceFieldEnum)[keyof typeof ValidationCodeOrderByRelevanceFieldEnum]
 
 
 
