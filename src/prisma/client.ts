@@ -49,3 +49,8 @@ export type User = Prisma.UserModel
  * 
  */
 export type Role = Prisma.RoleModel
+/**
+ * Model ValidationCode
+ * 
+ */
+export type ValidationCode = Prisma.ValidationCodeModel

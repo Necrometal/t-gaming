@@ -385,7 +385,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   User: 'User',
-  Role: 'Role'
+  Role: 'Role',
+  ValidationCode: 'ValidationCode'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -401,7 +402,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "role"
+    modelProps: "user" | "role" | "validationCode"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -537,6 +538,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ValidationCode: {
+      payload: Prisma.$ValidationCodePayload<ExtArgs>
+      fields: Prisma.ValidationCodeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ValidationCodeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ValidationCodePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ValidationCodeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ValidationCodePayload>
+        }
+        findFirst: {
+          args: Prisma.ValidationCodeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ValidationCodePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ValidationCodeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ValidationCodePayload>
+        }
+        findMany: {
+          args: Prisma.ValidationCodeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ValidationCodePayload>[]
+        }
+        create: {
+          args: Prisma.ValidationCodeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ValidationCodePayload>
+        }
+        createMany: {
+          args: Prisma.ValidationCodeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.ValidationCodeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ValidationCodePayload>
+        }
+        update: {
+          args: Prisma.ValidationCodeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ValidationCodePayload>
+        }
+        deleteMany: {
+          args: Prisma.ValidationCodeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ValidationCodeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.ValidationCodeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ValidationCodePayload>
+        }
+        aggregate: {
+          args: Prisma.ValidationCodeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateValidationCode>
+        }
+        groupBy: {
+          args: Prisma.ValidationCodeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ValidationCodeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ValidationCodeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ValidationCodeCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -580,7 +647,11 @@ export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
   password: 'password',
-  roleId: 'roleId'
+  roleId: 'roleId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
+  validateAt: 'validateAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -589,10 +660,24 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 export const RoleScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  tag: 'tag'
+  tag: 'tag',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
 } as const
 
 export type RoleScalarFieldEnum = (typeof RoleScalarFieldEnum)[keyof typeof RoleScalarFieldEnum]
+
+
+export const ValidationCodeScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  expiredAt: 'expiredAt'
+} as const
+
+export type ValidationCodeScalarFieldEnum = (typeof ValidationCodeScalarFieldEnum)[keyof typeof ValidationCodeScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -601,6 +686,14 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
 export const UserOrderByRelevanceFieldEnum = {
@@ -636,6 +729,13 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'String'
  */
 export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime'
+ */
+export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
     
 
 
@@ -742,6 +842,7 @@ export type PrismaClientOptions = ({
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   role?: Prisma.RoleOmit
+  validationCode?: Prisma.ValidationCodeOmit
 }
 
 /* Types for Logging */
