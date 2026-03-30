@@ -21,18 +21,15 @@ export class PrismaExceptionInterceptor implements NestInterceptor {
     const handler = context.getHandler();
     const controller = context.getClass();
 
-    let customFields: string[] | string = this.reflector.getAllAndOverride<
-      string[]
-    >(UNIQUE_ERROR_KEY, [handler, controller]);
+    let customFields: string[] | string = this.reflector.getAllAndOverride<string[]>(
+      UNIQUE_ERROR_KEY,
+      [handler, controller],
+    );
 
     return next.handle().pipe(
       catchError((error: any) => {
-        if (
-          error instanceof Prisma.PrismaClientKnownRequestError &&
-          error.code === 'P2002'
-        ) {
-          if (Array.isArray(customFields))
-            customFields = customFields.join(', ');
+        if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+          if (Array.isArray(customFields)) customFields = customFields.join(', ');
           throw new ConflictException(`${customFields} already exists`);
         }
 

@@ -1,4 +1,4 @@
-import { Role } from '@/http/model';
+import { Role, ValidationCode } from '@/http/model';
 
 export type User = {
   id: number;
@@ -6,4 +6,8 @@ export type User = {
   password?: string;
   roleId?: number;
   role?: Role;
+  createdAt?: string;
+  updatedAt?: string;
+  deletedAt?: string;
+  validationCode?: ValidationCode | null;
 };

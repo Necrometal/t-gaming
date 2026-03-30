@@ -8,15 +8,19 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { PrismaExceptionInterceptor } from '@/exceptions/prisma/prisma-exception/prisma-exception.interceptor';
 import { CqrsModule } from '@nestjs/cqrs';
 import { MailModule } from '@/modules/mail/mail.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
+import { EventsListenerModule } from './modules/events-listener/events-listener.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
     CqrsModule.forRoot(),
+    EventEmitterModule.forRoot(),
     RolesModule,
     PrismaModule,
     UsersModule,
     AuthModule,
     MailModule,
+    EventsListenerModule,
   ],
   controllers: [],
   providers: [

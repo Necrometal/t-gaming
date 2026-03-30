@@ -286,7 +286,7 @@ export type ValidationCodeCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   expiredAt: Date | string
-  user: Prisma.UserCreateNestedOneWithoutValidationInput
+  user: Prisma.UserCreateNestedOneWithoutValidationCodeInput
 }
 
 export type ValidationCodeUncheckedCreateInput = {
@@ -303,7 +303,7 @@ export type ValidationCodeUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutValidationNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutValidationCodeNestedInput
 }
 
 export type ValidationCodeUncheckedUpdateInput = {

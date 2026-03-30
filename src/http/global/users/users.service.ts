@@ -8,6 +8,7 @@ import { addMinute } from '@formkit/tempo';
 import { CODE_DURATION } from '@/constantes/global';
 import { hash } from '@/helpers/helpers.text';
 import { generateNumber } from '@/helpers/helpers.number';
+import { ValidationDataSimple } from '@/http/global/fragments/validation';
 
 @Injectable()
 export class UsersService {
@@ -22,15 +23,21 @@ export class UsersService {
             id: user.roleId,
           },
         },
-        validation: {
+        validationCode: {
           create: {
             expiredAt: addMinute(new Date(), parseInt(env(CODE_DURATION))),
             code: generateNumber(6, true) as string,
           },
         },
       },
-      select: UserDataSimple,
+      select: {
+        ...UserDataSimple,
+        validationCode: {
+          select: ValidationDataSimple,
+        },
+      },
     });
+
     return result;
   }
 }

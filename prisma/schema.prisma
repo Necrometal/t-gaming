@@ -23,7 +23,7 @@ model User {
   updatedAt  DateTime        @default(now())
   deletedAt  DateTime?
   validateAt DateTime?
-  validation ValidationCode?
+  validationCode ValidationCode?
 }
 
 model Role {
