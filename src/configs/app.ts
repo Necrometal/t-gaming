@@ -7,6 +7,6 @@ export const configValidation = (app: INestApplication<any>) => {
 
 export const configRoute = (app: INestApplication<any>) => {
   app.setGlobalPrefix('admin', {
-    exclude: [],
+    exclude: ['auth/*path'],
   });
 };

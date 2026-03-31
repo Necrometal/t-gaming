@@ -52,7 +52,9 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
-  Role: 'Role'
+  Profile: 'Profile',
+  Role: 'Role',
+  ValidationCode: 'ValidationCode'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -75,19 +77,52 @@ export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
   password: 'password',
-  roleId: 'roleId'
+  roleId: 'roleId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
+  validateAt: 'validateAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+export const ProfileScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  lastname: 'lastname',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
+  userId: 'userId'
+} as const
+
+export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum]
+
+
 export const RoleScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  tag: 'tag'
+  tag: 'tag',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
 } as const
 
 export type RoleScalarFieldEnum = (typeof RoleScalarFieldEnum)[keyof typeof RoleScalarFieldEnum]
+
+
+export const ValidationCodeScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  code: 'code',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  expiredAt: 'expiredAt',
+  used: 'used'
+} as const
+
+export type ValidationCodeScalarFieldEnum = (typeof ValidationCodeScalarFieldEnum)[keyof typeof ValidationCodeScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -98,6 +133,14 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
 export const UserOrderByRelevanceFieldEnum = {
   email: 'email',
   password: 'password'
@@ -106,10 +149,25 @@ export const UserOrderByRelevanceFieldEnum = {
 export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum]
 
 
+export const ProfileOrderByRelevanceFieldEnum = {
+  name: 'name',
+  lastname: 'lastname'
+} as const
+
+export type ProfileOrderByRelevanceFieldEnum = (typeof ProfileOrderByRelevanceFieldEnum)[keyof typeof ProfileOrderByRelevanceFieldEnum]
+
+
 export const RoleOrderByRelevanceFieldEnum = {
   name: 'name',
   tag: 'tag'
 } as const
 
 export type RoleOrderByRelevanceFieldEnum = (typeof RoleOrderByRelevanceFieldEnum)[keyof typeof RoleOrderByRelevanceFieldEnum]
+
+
+export const ValidationCodeOrderByRelevanceFieldEnum = {
+  code: 'code'
+} as const
+
+export type ValidationCodeOrderByRelevanceFieldEnum = (typeof ValidationCodeOrderByRelevanceFieldEnum)[keyof typeof ValidationCodeOrderByRelevanceFieldEnum]
 
