@@ -10,6 +10,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { MailModule } from '@/modules/mail/mail.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { EventsListenerModule } from './modules/events-listener/events-listener.module';
+import { CryptoModule } from './modules/crypto/crypto.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -21,6 +22,7 @@ import { EventsListenerModule } from './modules/events-listener/events-listener.
     AuthModule,
     MailModule,
     EventsListenerModule,
+    CryptoModule,
   ],
   controllers: [],
   providers: [
