@@ -18,15 +18,15 @@ export class AuthService {
     private readonly validationCode: ValidationCodeService,
   ) {}
 
-  async register(user: CreateUserDto): Promise<UserRegisteredResult> {
+  async register(userDto: CreateUserDto): Promise<UserRegisteredResult> {
     try {
-      const { validationCode, ...rest } = await this.usersService.createUser(user);
+      const { validationCode, profile, ...user } = await this.usersService.createUser(userDto);
       this.eventEmitter.emit(
         USER_REGISTERED,
-        new UserRegisteredEvent({ ...rest }, validationCode!),
+        new UserRegisteredEvent({ ...user, profile }, validationCode!),
       );
       return {
-        user: rest,
+        user,
         validationCodeToken: await this.crypto.encrypt(validationCode!),
       };
     } catch (error) {
@@ -34,14 +34,14 @@ export class AuthService {
     }
   }
 
-  async resendCode(code: ResendCodeDto): Promise<ResendCodeResult> {
-    const validationCode = await this.crypto.decrypt(code.validationCodeToken);
-    const { user, ...rest } = await this.validationCode.update(validationCode);
+  async resendCode(codeDto: ResendCodeDto): Promise<ResendCodeResult> {
+    const validationCode = await this.crypto.decrypt(codeDto.validationCodeToken);
+    const { user, ...code } = await this.validationCode.update(validationCode);
 
-    this.eventEmitter.emit(USER_RESEND_CODE, new ResendCodeEvent(user!, { ...rest }));
+    this.eventEmitter.emit(USER_RESEND_CODE, new ResendCodeEvent(user!, { ...code }));
 
     return {
-      validationCodeToken: await this.crypto.encrypt(rest),
+      validationCodeToken: await this.crypto.encrypt(code),
     };
   }
 

@@ -1,14 +1,13 @@
 import { PrismaService } from '@/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/user.dto';
-import { UserDataSimple } from '@/http/global/fragments/user';
 import type { User } from '@/http/model';
 import { env } from 'prisma/config';
 import { CODE_DURATION } from '@/constantes/global';
 import { generateNumber } from '@/helpers/helpers.number';
-import { ValidationDataSimple } from '@/http/global/fragments/validation';
 import { CryptoService } from '@/modules/crypto/crypto.service';
 import { dateAfter } from '@/helpers/helpers.date';
+import { ProfileDataSimple, UserDataSimple, ValidationDataSimple } from '@/http/global/fragments';
 
 @Injectable()
 export class UsersService {
@@ -32,11 +31,20 @@ export class UsersService {
             code: generateNumber(6, true) as string,
           },
         },
+        profile: {
+          create: {
+            name: user.name,
+            lastname: user.lastname,
+          },
+        },
       },
       select: {
         ...UserDataSimple,
         validationCode: {
           select: ValidationDataSimple,
+        },
+        profile: {
+          select: ProfileDataSimple,
         },
       },
     });

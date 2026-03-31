@@ -5,8 +5,7 @@ import { ValidationCode } from '@/http/model';
 import { PrismaService } from '@/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { env } from 'prisma/config';
-import { ValidationDataSimple } from '@/http/global/fragments/validation';
-import { UserDataSimple } from '@/http/global/fragments/user';
+import { UserDataSimple, ProfileDataSimple, ValidationDataSimple } from '@/http/global/fragments';
 
 @Injectable()
 export class ValidationCodeService {
@@ -24,7 +23,12 @@ export class ValidationCodeService {
       select: {
         ...ValidationDataSimple,
         user: {
-          select: UserDataSimple,
+          select: {
+            ...UserDataSimple,
+            profile: {
+              select: ProfileDataSimple,
+            },
+          },
         },
       },
     });

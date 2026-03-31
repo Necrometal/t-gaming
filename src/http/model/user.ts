@@ -10,7 +10,7 @@ export type User = {
   updatedAt?: string;
   deletedAt?: string;
   validationCode?: ValidationCode | null;
-  profile?: Profile;
+  profile?: Profile | null;
 };
 
 export type UserRegisteredResult = {
