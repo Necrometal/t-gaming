@@ -12,6 +12,8 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { EventsListenerModule } from '@/modules/events-listener/events-listener.module';
 import { CryptoModule } from '@/modules/crypto/crypto.module';
 import { ValidationCodeModule } from '@/http/global/validation-code/validation-code.module';
+import { I18nModule } from 'nestjs-i18n';
+import * as path from 'path';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -25,6 +27,13 @@ import { ValidationCodeModule } from '@/http/global/validation-code/validation-c
     EventsListenerModule,
     CryptoModule,
     ValidationCodeModule,
+    I18nModule.forRoot({
+      fallbackLanguage: 'en',
+      loaderOptions: {
+        path: path.join(__dirname, '/i18n/'),
+        watch: true,
+      },
+    }),
   ],
   controllers: [],
   providers: [
