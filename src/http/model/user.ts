@@ -11,3 +11,8 @@ export type User = {
   deletedAt?: string;
   validationCode?: ValidationCode | null;
 };
+
+export type UserRegisteredResult = {
+  user: User;
+  validationCodeToken: string;
+};

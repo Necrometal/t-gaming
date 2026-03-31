@@ -6,18 +6,21 @@ import type { User } from '@/http/model';
 import { env } from 'prisma/config';
 import { addMinute } from '@formkit/tempo';
 import { CODE_DURATION } from '@/constantes/global';
-import { hash } from '@/helpers/helpers.text';
 import { generateNumber } from '@/helpers/helpers.number';
 import { ValidationDataSimple } from '@/http/global/fragments/validation';
+import { CryptoService } from '@/modules/crypto/crypto.service';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly crypto: CryptoService,
+  ) {}
   async createUser(user: CreateUserDto) {
     const result: User = await this.prisma.user.create({
       data: {
         email: user.email,
-        password: await hash(user.password),
+        password: await this.crypto.hash(user.password),
         role: {
           connect: {
             id: user.roleId,
