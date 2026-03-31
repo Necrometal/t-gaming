@@ -9,8 +9,9 @@ import { PrismaExceptionInterceptor } from '@/exceptions/prisma/prisma-exception
 import { CqrsModule } from '@nestjs/cqrs';
 import { MailModule } from '@/modules/mail/mail.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
-import { EventsListenerModule } from './modules/events-listener/events-listener.module';
-import { CryptoModule } from './modules/crypto/crypto.module';
+import { EventsListenerModule } from '@/modules/events-listener/events-listener.module';
+import { CryptoModule } from '@/modules/crypto/crypto.module';
+import { ValidationCodeModule } from '@/http/global/validation-code/validation-code.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -23,6 +24,7 @@ import { CryptoModule } from './modules/crypto/crypto.module';
     MailModule,
     EventsListenerModule,
     CryptoModule,
+    ValidationCodeModule,
   ],
   controllers: [],
   providers: [

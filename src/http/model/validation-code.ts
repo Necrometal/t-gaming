@@ -1,4 +1,4 @@
-import { User } from '@/http/model';
+import { User, UserRegisteredResult } from '@/http/model';
 
 export type ValidationCode = {
   id: number;
@@ -9,3 +9,5 @@ export type ValidationCode = {
   updatedAt?: string;
   expiredAt?: string;
 };
+
+export type ResendCodeResult = Omit<UserRegisteredResult, 'user'>;

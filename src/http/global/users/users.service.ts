@@ -4,11 +4,11 @@ import { CreateUserDto } from './dto/user.dto';
 import { UserDataSimple } from '@/http/global/fragments/user';
 import type { User } from '@/http/model';
 import { env } from 'prisma/config';
-import { addMinute } from '@formkit/tempo';
 import { CODE_DURATION } from '@/constantes/global';
 import { generateNumber } from '@/helpers/helpers.number';
 import { ValidationDataSimple } from '@/http/global/fragments/validation';
 import { CryptoService } from '@/modules/crypto/crypto.service';
+import { dateAfter } from '@/helpers/helpers.date';
 
 @Injectable()
 export class UsersService {
@@ -28,7 +28,7 @@ export class UsersService {
         },
         validationCode: {
           create: {
-            expiredAt: addMinute(new Date(), parseInt(env(CODE_DURATION))),
+            expiredAt: dateAfter(new Date(), parseInt(env(CODE_DURATION))),
             code: generateNumber(6, true) as string,
           },
         },
