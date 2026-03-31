@@ -1,7 +1,0 @@
-import { PrismaService } from '@/prisma.service';
-import { Injectable } from '@nestjs/common';
-
-@Injectable()
-export class ValidationCodeService {
-  constructor(private readonly prisma: PrismaService) {}
-}

@@ -2,7 +2,7 @@ import { Role, ValidationCode, Profile } from '@/http/model';
 
 export type User = {
   id: number;
-  email: string;
+  email?: string;
   password?: string;
   roleId?: number;
   role?: Role;

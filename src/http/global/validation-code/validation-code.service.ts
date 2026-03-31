@@ -35,4 +35,45 @@ export class ValidationCodeService {
 
     return result;
   }
+
+  async check(validation: ValidationCode): Promise<ValidationCode | null> {
+    const result: ValidationCode | null = await this.prisma.validationCode.findFirst({
+      where: {
+        AND: [
+          {
+            expiredAt: {
+              gt: new Date(),
+            },
+          },
+          {
+            id: validation.id,
+            code: validation.code,
+          },
+        ],
+      },
+      select: {
+        id: true,
+        used: true,
+        user: {
+          select: {
+            ...UserDataSimple,
+            profile: {
+              select: ProfileDataSimple,
+            },
+          },
+        },
+      },
+    });
+
+    return result;
+  }
+
+  async use(validation: ValidationCode) {
+    await this.prisma.validationCode.update({
+      where: { id: validation.id },
+      data: {
+        used: true,
+      },
+    });
+  }
 }

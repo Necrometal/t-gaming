@@ -11,7 +11,7 @@ export class UserRegisteredListener {
   @OnEvent(USER_REGISTERED)
   handleUserRegisteredEvent({ user, validationCode }: UserRegisteredEvent) {
     this.mailService.sendEmail({
-      to: [user.email],
+      to: [user.email!],
       subject: 'Account Registration',
       template: 'mail/register',
       context: {

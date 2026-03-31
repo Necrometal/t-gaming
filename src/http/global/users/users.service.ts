@@ -51,4 +51,6 @@ export class UsersService {
 
     return result;
   }
+
+  async confirmAccount(id: number) {}
 }

@@ -755,7 +755,8 @@ export const ValidationCodeScalarFieldEnum = {
   code: 'code',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  expiredAt: 'expiredAt'
+  expiredAt: 'expiredAt',
+  used: 'used'
 } as const
 
 export type ValidationCodeScalarFieldEnum = (typeof ValidationCodeScalarFieldEnum)[keyof typeof ValidationCodeScalarFieldEnum]
@@ -832,6 +833,13 @@ export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 
  * Reference to a field of type 'DateTime'
  */
 export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 

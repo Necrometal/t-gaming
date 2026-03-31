@@ -9,9 +9,9 @@ export class ResendCodeListener {
   constructor(private readonly mailService: MailService) {}
 
   @OnEvent(USER_RESEND_CODE)
-  handleUserRegisteredEvent({ user, validationCode }: ResendCodeEvent) {
+  handleResendCodeEvent({ user, validationCode }: ResendCodeEvent) {
     this.mailService.sendEmail({
-      to: [user.email],
+      to: [user.email!],
       subject: 'New Validation Code',
       template: 'mail/resend-code',
       context: {

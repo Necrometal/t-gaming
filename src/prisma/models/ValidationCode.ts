@@ -43,6 +43,7 @@ export type ValidationCodeMinAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   expiredAt: Date | null
+  used: boolean | null
 }
 
 export type ValidationCodeMaxAggregateOutputType = {
@@ -52,6 +53,7 @@ export type ValidationCodeMaxAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   expiredAt: Date | null
+  used: boolean | null
 }
 
 export type ValidationCodeCountAggregateOutputType = {
@@ -61,6 +63,7 @@ export type ValidationCodeCountAggregateOutputType = {
   createdAt: number
   updatedAt: number
   expiredAt: number
+  used: number
   _all: number
 }
 
@@ -82,6 +85,7 @@ export type ValidationCodeMinAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   expiredAt?: true
+  used?: true
 }
 
 export type ValidationCodeMaxAggregateInputType = {
@@ -91,6 +95,7 @@ export type ValidationCodeMaxAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   expiredAt?: true
+  used?: true
 }
 
 export type ValidationCodeCountAggregateInputType = {
@@ -100,6 +105,7 @@ export type ValidationCodeCountAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   expiredAt?: true
+  used?: true
   _all?: true
 }
 
@@ -196,6 +202,7 @@ export type ValidationCodeGroupByOutputType = {
   createdAt: Date
   updatedAt: Date
   expiredAt: Date
+  used: boolean
   _count: ValidationCodeCountAggregateOutputType | null
   _avg: ValidationCodeAvgAggregateOutputType | null
   _sum: ValidationCodeSumAggregateOutputType | null
@@ -228,6 +235,7 @@ export type ValidationCodeWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"ValidationCode"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ValidationCode"> | Date | string
   expiredAt?: Prisma.DateTimeFilter<"ValidationCode"> | Date | string
+  used?: Prisma.BoolFilter<"ValidationCode"> | boolean
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
@@ -238,6 +246,7 @@ export type ValidationCodeOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   expiredAt?: Prisma.SortOrder
+  used?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   _relevance?: Prisma.ValidationCodeOrderByRelevanceInput
 }
@@ -252,6 +261,7 @@ export type ValidationCodeWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"ValidationCode"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ValidationCode"> | Date | string
   expiredAt?: Prisma.DateTimeFilter<"ValidationCode"> | Date | string
+  used?: Prisma.BoolFilter<"ValidationCode"> | boolean
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id" | "userId">
 
@@ -262,6 +272,7 @@ export type ValidationCodeOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   expiredAt?: Prisma.SortOrder
+  used?: Prisma.SortOrder
   _count?: Prisma.ValidationCodeCountOrderByAggregateInput
   _avg?: Prisma.ValidationCodeAvgOrderByAggregateInput
   _max?: Prisma.ValidationCodeMaxOrderByAggregateInput
@@ -279,6 +290,7 @@ export type ValidationCodeScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ValidationCode"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ValidationCode"> | Date | string
   expiredAt?: Prisma.DateTimeWithAggregatesFilter<"ValidationCode"> | Date | string
+  used?: Prisma.BoolWithAggregatesFilter<"ValidationCode"> | boolean
 }
 
 export type ValidationCodeCreateInput = {
@@ -286,6 +298,7 @@ export type ValidationCodeCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   expiredAt: Date | string
+  used?: boolean
   user: Prisma.UserCreateNestedOneWithoutValidationCodeInput
 }
 
@@ -296,6 +309,7 @@ export type ValidationCodeUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   expiredAt: Date | string
+  used?: boolean
 }
 
 export type ValidationCodeUpdateInput = {
@@ -303,6 +317,7 @@ export type ValidationCodeUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  used?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneRequiredWithoutValidationCodeNestedInput
 }
 
@@ -313,6 +328,7 @@ export type ValidationCodeUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  used?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ValidationCodeCreateManyInput = {
@@ -322,6 +338,7 @@ export type ValidationCodeCreateManyInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   expiredAt: Date | string
+  used?: boolean
 }
 
 export type ValidationCodeUpdateManyMutationInput = {
@@ -329,6 +346,7 @@ export type ValidationCodeUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  used?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ValidationCodeUncheckedUpdateManyInput = {
@@ -338,6 +356,7 @@ export type ValidationCodeUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  used?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ValidationCodeNullableScalarRelationFilter = {
@@ -358,6 +377,7 @@ export type ValidationCodeCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   expiredAt?: Prisma.SortOrder
+  used?: Prisma.SortOrder
 }
 
 export type ValidationCodeAvgOrderByAggregateInput = {
@@ -372,6 +392,7 @@ export type ValidationCodeMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   expiredAt?: Prisma.SortOrder
+  used?: Prisma.SortOrder
 }
 
 export type ValidationCodeMinOrderByAggregateInput = {
@@ -381,6 +402,7 @@ export type ValidationCodeMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   expiredAt?: Prisma.SortOrder
+  used?: Prisma.SortOrder
 }
 
 export type ValidationCodeSumOrderByAggregateInput = {
@@ -420,11 +442,16 @@ export type ValidationCodeUncheckedUpdateOneWithoutUserNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ValidationCodeUpdateToOneWithWhereWithoutUserInput, Prisma.ValidationCodeUpdateWithoutUserInput>, Prisma.ValidationCodeUncheckedUpdateWithoutUserInput>
 }
 
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
 export type ValidationCodeCreateWithoutUserInput = {
   code: string
   createdAt?: Date | string
   updatedAt?: Date | string
   expiredAt: Date | string
+  used?: boolean
 }
 
 export type ValidationCodeUncheckedCreateWithoutUserInput = {
@@ -433,6 +460,7 @@ export type ValidationCodeUncheckedCreateWithoutUserInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   expiredAt: Date | string
+  used?: boolean
 }
 
 export type ValidationCodeCreateOrConnectWithoutUserInput = {
@@ -456,6 +484,7 @@ export type ValidationCodeUpdateWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  used?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ValidationCodeUncheckedUpdateWithoutUserInput = {
@@ -464,6 +493,7 @@ export type ValidationCodeUncheckedUpdateWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  used?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
@@ -475,6 +505,7 @@ export type ValidationCodeSelect<ExtArgs extends runtime.Types.Extensions.Intern
   createdAt?: boolean
   updatedAt?: boolean
   expiredAt?: boolean
+  used?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["validationCode"]>
 
@@ -487,9 +518,10 @@ export type ValidationCodeSelectScalar = {
   createdAt?: boolean
   updatedAt?: boolean
   expiredAt?: boolean
+  used?: boolean
 }
 
-export type ValidationCodeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "code" | "createdAt" | "updatedAt" | "expiredAt", ExtArgs["result"]["validationCode"]>
+export type ValidationCodeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "code" | "createdAt" | "updatedAt" | "expiredAt" | "used", ExtArgs["result"]["validationCode"]>
 export type ValidationCodeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -506,6 +538,7 @@ export type $ValidationCodePayload<ExtArgs extends runtime.Types.Extensions.Inte
     createdAt: Date
     updatedAt: Date
     expiredAt: Date
+    used: boolean
   }, ExtArgs["result"]["validationCode"]>
   composites: {}
 }
@@ -882,6 +915,7 @@ export interface ValidationCodeFieldRefs {
   readonly createdAt: Prisma.FieldRef<"ValidationCode", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"ValidationCode", 'DateTime'>
   readonly expiredAt: Prisma.FieldRef<"ValidationCode", 'DateTime'>
+  readonly used: Prisma.FieldRef<"ValidationCode", 'Boolean'>
 }
     
 
