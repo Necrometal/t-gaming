@@ -245,6 +245,7 @@ export type UserWhereInput = {
   deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   validateAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   role?: Prisma.XOR<Prisma.RoleScalarRelationFilter, Prisma.RoleWhereInput>
+  profile?: Prisma.XOR<Prisma.ProfileNullableScalarRelationFilter, Prisma.ProfileWhereInput> | null
   validationCode?: Prisma.XOR<Prisma.ValidationCodeNullableScalarRelationFilter, Prisma.ValidationCodeWhereInput> | null
 }
 
@@ -258,6 +259,7 @@ export type UserOrderByWithRelationInput = {
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   validateAt?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.RoleOrderByWithRelationInput
+  profile?: Prisma.ProfileOrderByWithRelationInput
   validationCode?: Prisma.ValidationCodeOrderByWithRelationInput
   _relevance?: Prisma.UserOrderByRelevanceInput
 }
@@ -275,6 +277,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   validateAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   role?: Prisma.XOR<Prisma.RoleScalarRelationFilter, Prisma.RoleWhereInput>
+  profile?: Prisma.XOR<Prisma.ProfileNullableScalarRelationFilter, Prisma.ProfileWhereInput> | null
   validationCode?: Prisma.XOR<Prisma.ValidationCodeNullableScalarRelationFilter, Prisma.ValidationCodeWhereInput> | null
 }, "id" | "email">
 
@@ -316,6 +319,7 @@ export type UserCreateInput = {
   deletedAt?: Date | string | null
   validateAt?: Date | string | null
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   validationCode?: Prisma.ValidationCodeCreateNestedOneWithoutUserInput
 }
 
@@ -328,6 +332,7 @@ export type UserUncheckedCreateInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   validateAt?: Date | string | null
+  profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   validationCode?: Prisma.ValidationCodeUncheckedCreateNestedOneWithoutUserInput
 }
 
@@ -339,6 +344,7 @@ export type UserUpdateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   validateAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   validationCode?: Prisma.ValidationCodeUpdateOneWithoutUserNestedInput
 }
 
@@ -351,6 +357,7 @@ export type UserUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   validateAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   validationCode?: Prisma.ValidationCodeUncheckedUpdateOneWithoutUserNestedInput
 }
 
@@ -434,6 +441,11 @@ export type UserSumOrderByAggregateInput = {
   roleId?: Prisma.SortOrder
 }
 
+export type UserScalarRelationFilter = {
+  is?: Prisma.UserWhereInput
+  isNot?: Prisma.UserWhereInput
+}
+
 export type UserListRelationFilter = {
   every?: Prisma.UserWhereInput
   some?: Prisma.UserWhereInput
@@ -442,11 +454,6 @@ export type UserListRelationFilter = {
 
 export type UserOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
-}
-
-export type UserScalarRelationFilter = {
-  is?: Prisma.UserWhereInput
-  isNot?: Prisma.UserWhereInput
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -467,6 +474,20 @@ export type IntFieldUpdateOperationsInput = {
   decrement?: number
   multiply?: number
   divide?: number
+}
+
+export type UserCreateNestedOneWithoutProfileInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutProfileInput, Prisma.UserUncheckedCreateWithoutProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutProfileInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutProfileNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutProfileInput, Prisma.UserUncheckedCreateWithoutProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutProfileInput
+  upsert?: Prisma.UserUpsertWithoutProfileInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutProfileInput, Prisma.UserUpdateWithoutProfileInput>, Prisma.UserUncheckedUpdateWithoutProfileInput>
 }
 
 export type UserCreateNestedManyWithoutRoleInput = {
@@ -525,6 +546,68 @@ export type UserUpdateOneRequiredWithoutValidationCodeNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutValidationCodeInput, Prisma.UserUpdateWithoutValidationCodeInput>, Prisma.UserUncheckedUpdateWithoutValidationCodeInput>
 }
 
+export type UserCreateWithoutProfileInput = {
+  email: string
+  password: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  validateAt?: Date | string | null
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  validationCode?: Prisma.ValidationCodeCreateNestedOneWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutProfileInput = {
+  id?: number
+  email: string
+  password: string
+  roleId: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  validateAt?: Date | string | null
+  validationCode?: Prisma.ValidationCodeUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutProfileInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutProfileInput, Prisma.UserUncheckedCreateWithoutProfileInput>
+}
+
+export type UserUpsertWithoutProfileInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutProfileInput, Prisma.UserUncheckedUpdateWithoutProfileInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutProfileInput, Prisma.UserUncheckedCreateWithoutProfileInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutProfileInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutProfileInput, Prisma.UserUncheckedUpdateWithoutProfileInput>
+}
+
+export type UserUpdateWithoutProfileInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validateAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  validationCode?: Prisma.ValidationCodeUpdateOneWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutProfileInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  roleId?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validateAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  validationCode?: Prisma.ValidationCodeUncheckedUpdateOneWithoutUserNestedInput
+}
+
 export type UserCreateWithoutRoleInput = {
   email: string
   password: string
@@ -532,6 +615,7 @@ export type UserCreateWithoutRoleInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   validateAt?: Date | string | null
+  profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   validationCode?: Prisma.ValidationCodeCreateNestedOneWithoutUserInput
 }
 
@@ -543,6 +627,7 @@ export type UserUncheckedCreateWithoutRoleInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   validateAt?: Date | string | null
+  profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   validationCode?: Prisma.ValidationCodeUncheckedCreateNestedOneWithoutUserInput
 }
 
@@ -594,6 +679,7 @@ export type UserCreateWithoutValidationCodeInput = {
   deletedAt?: Date | string | null
   validateAt?: Date | string | null
   role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutValidationCodeInput = {
@@ -605,6 +691,7 @@ export type UserUncheckedCreateWithoutValidationCodeInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   validateAt?: Date | string | null
+  profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutValidationCodeInput = {
@@ -631,6 +718,7 @@ export type UserUpdateWithoutValidationCodeInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   validateAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutValidationCodeInput = {
@@ -642,6 +730,7 @@ export type UserUncheckedUpdateWithoutValidationCodeInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   validateAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateManyRoleInput = {
@@ -661,6 +750,7 @@ export type UserUpdateWithoutRoleInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   validateAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   validationCode?: Prisma.ValidationCodeUpdateOneWithoutUserNestedInput
 }
 
@@ -672,6 +762,7 @@ export type UserUncheckedUpdateWithoutRoleInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   validateAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   validationCode?: Prisma.ValidationCodeUncheckedUpdateOneWithoutUserNestedInput
 }
 
@@ -697,6 +788,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   deletedAt?: boolean
   validateAt?: boolean
   role?: boolean | Prisma.RoleDefaultArgs<ExtArgs>
+  profile?: boolean | Prisma.User$profileArgs<ExtArgs>
   validationCode?: boolean | Prisma.User$validationCodeArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -716,6 +808,7 @@ export type UserSelectScalar = {
 export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "roleId" | "createdAt" | "updatedAt" | "deletedAt" | "validateAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   role?: boolean | Prisma.RoleDefaultArgs<ExtArgs>
+  profile?: boolean | Prisma.User$profileArgs<ExtArgs>
   validationCode?: boolean | Prisma.User$validationCodeArgs<ExtArgs>
 }
 
@@ -723,6 +816,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "User"
   objects: {
     role: Prisma.$RolePayload<ExtArgs>
+    profile: Prisma.$ProfilePayload<ExtArgs> | null
     validationCode: Prisma.$ValidationCodePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1075,6 +1169,7 @@ readonly fields: UserFieldRefs;
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   role<T extends Prisma.RoleDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RoleDefaultArgs<ExtArgs>>): Prisma.Prisma__RoleClient<runtime.Types.Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  profile<T extends Prisma.User$profileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$profileArgs<ExtArgs>>): Prisma.Prisma__ProfileClient<runtime.Types.Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   validationCode<T extends Prisma.User$validationCodeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$validationCodeArgs<ExtArgs>>): Prisma.Prisma__ValidationCodeClient<runtime.Types.Result.GetResult<Prisma.$ValidationCodePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1458,6 +1553,25 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Users to delete.
    */
   limit?: number
+}
+
+/**
+ * User.profile
+ */
+export type User$profileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Profile
+   */
+  select?: Prisma.ProfileSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Profile
+   */
+  omit?: Prisma.ProfileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProfileInclude<ExtArgs> | null
+  where?: Prisma.ProfileWhereInput
 }
 
 /**
