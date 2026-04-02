@@ -66,8 +66,9 @@ export class AuthController {
     };
   }
 
+  @Post('change-password')
   async changePassword(@Body() password: ChangePasswordDto) {
-    // const result = await this.authService.changePassword(password);
-    // return result;
+    const result = await this.authService.changePassword(password);
+    return result;
   }
 }

@@ -44,4 +44,14 @@ export class ValidationCodeService {
 
     return result;
   }
+
+  async getValidationCodeByToken(token: string): Promise<ValidationCode> {
+    const validationCode: ValidationCode = await this.crypto.decrypt(token);
+    const result = await this.validationCodeRepository.getValidationCodeById(validationCode.id);
+    if (!result) {
+      throw new BadRequestException('Invalid validation code token');
+    }
+
+    return result;
+  }
 }

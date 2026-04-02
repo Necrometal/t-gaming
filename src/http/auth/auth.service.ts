@@ -1,6 +1,7 @@
 import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
 import { UsersService } from '@/http/global/users/users.service';
 import {
+  ChangePasswordDto,
   ConfirmAccountDto,
   ConfirmResetPasswordDto,
   CreateUserDto,
@@ -107,6 +108,16 @@ export class AuthService {
     return {
       validationCodeToken: code.validationCodeToken,
     };
+  }
+
+  async changePassword(changePasswordDto: ChangePasswordDto): Promise<boolean> {
+    const { user } = await this.validationCode.getValidationCodeByToken(
+      changePasswordDto.validationCodeToken,
+    );
+
+    await this.usersService.changePassword(user!, changePasswordDto.password);
+
+    return true;
   }
 
   async login(credentials: LoginUserDto) {}

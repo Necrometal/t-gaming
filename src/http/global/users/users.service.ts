@@ -19,4 +19,8 @@ export class UsersService {
   async findByEmailValidated(email: string) {
     return this.userRepository.findByEmail(email);
   }
+
+  async changePassword(user: User, password: string) {
+    return this.userRepository.changePassword(user.id, password);
+  }
 }

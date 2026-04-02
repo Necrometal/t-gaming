@@ -78,4 +78,20 @@ export class UserRepositoryService {
       data: { validateAt: new Date() },
     });
   }
+
+  /**
+   *
+   * @param id User id
+   * @param password New password
+   * @returns
+   */
+  async changePassword(id: number, password: string) {
+    return this.prisma.user.update({
+      where: { id },
+      data: {
+        password: await this.crypto.hash(password),
+        updatedAt: new Date(),
+      },
+    });
+  }
 }

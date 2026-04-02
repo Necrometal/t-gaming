@@ -106,4 +106,21 @@ export class ValidationCodeRepositoryService {
       },
     });
   }
+
+  async getValidationCodeById(id: number) {
+    return this.prisma.validationCode.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        user: {
+          select: {
+            ...UserDataSimple,
+            profile: {
+              select: ProfileDataSimple,
+            },
+          },
+        },
+      },
+    });
+  }
 }
