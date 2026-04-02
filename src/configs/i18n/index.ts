@@ -1,4 +1,3 @@
-import { ConfigService } from '@nestjs/config';
 import { AcceptLanguageResolver, HeaderResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
 import * as path from 'path';
 import { env } from 'prisma/config';
@@ -8,7 +7,7 @@ const i18nConfig = () => {
     useFactory: () => ({
       fallbackLanguage: env('FALLBACK_LANGUAGE'),
       loaderOptions: {
-        path: path.join(__dirname, '/i18n/'),
+        path: process.cwd() + '/src/i18n/',
         watch: true,
       },
     }),
