@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model User {
+  id             Int             @id @default(autoincrement())
+  email          String          @unique
+  password       String
+  roleId         Int
+  role           Role            @relation(fields: [roleId], references: [id])
+  profile        Profile?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @default(now())
+  deletedAt      DateTime?
+  validateAt     DateTime?
+  validationCode ValidationCode?
+}
+
+model Profile {
+  id        Int       @id @default(autoincrement())
+  name      String
+  lastname  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  deletedAt DateTime?
+  userId    Int       @unique
+  user      User      @relation(fields: [userId], references: [id])
+}
+
+model Role {
+  id        Int       @id @default(autoincrement())
+  name      String
+  tag       String    @unique
+  users     User[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  deletedAt DateTime?
+}
+
+model ValidationCode {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @unique
+  user      User     @relation(fields: [userId], references: [id])
+  code      String   @db.Char(6)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  expiredAt DateTime
+  used      Boolean  @default(false)
+}
