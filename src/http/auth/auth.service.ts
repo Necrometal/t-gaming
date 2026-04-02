@@ -11,6 +11,7 @@ import {
 } from '@/http/global/users/dto/user.dto';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import {
+  USER_CHANGE_PASSWORD,
   USER_CONFIRMED_ACCOUNT,
   USER_REGISTERED,
   USER_RESEND_CODE,
@@ -31,6 +32,7 @@ import { UserRepositoryService } from '@/repositories/user-repository/user-repos
 import { ValidationCodeRepositoryService } from '@/repositories/validation-code-repository/validation-code-repository.service';
 import { UserResetPasswordEvent } from '@/events/class/UserResetPasswordEvent';
 import { VALIDATION_CODE_TYPE_ACCOUNT } from '@/constantes/field-value';
+import { ChangePasswordEvent } from '@/events/class/ChangePasswordEvent';
 
 @Injectable()
 export class AuthService {
@@ -116,6 +118,7 @@ export class AuthService {
     );
 
     await this.usersService.changePassword(user!, changePasswordDto.password);
+    this.eventEmitter.emit(USER_CHANGE_PASSWORD, new ChangePasswordEvent(user!, new Date()));
 
     return true;
   }
