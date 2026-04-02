@@ -1,56 +1,22 @@
-import { PrismaService } from '@/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/user.dto';
 import type { User } from '@/http/model';
-import { env } from 'prisma/config';
-import { CODE_DURATION } from '@/constantes/global';
-import { generateNumber } from '@/helpers/helpers.number';
-import { CryptoService } from '@/modules/crypto/crypto.service';
-import { dateAfter } from '@/helpers/helpers.date';
-import { ProfileDataSimple, UserDataSimple, ValidationDataSimple } from '@/http/global/fragments';
+import { UserRepositoryService } from '@/repositories/user-repository/user-repository.service';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    private readonly prisma: PrismaService,
-    private readonly crypto: CryptoService,
-  ) {}
+  constructor(private readonly userRepository: UserRepositoryService) {}
   async createUser(user: CreateUserDto) {
-    const result: User = await this.prisma.user.create({
-      data: {
-        email: user.email,
-        password: await this.crypto.hash(user.password),
-        role: {
-          connect: {
-            id: user.roleId,
-          },
-        },
-        validationCode: {
-          create: {
-            expiredAt: dateAfter(new Date(), parseInt(env(CODE_DURATION))),
-            code: generateNumber(6, true) as string,
-          },
-        },
-        profile: {
-          create: {
-            name: user.name,
-            lastname: user.lastname,
-          },
-        },
-      },
-      select: {
-        ...UserDataSimple,
-        validationCode: {
-          select: ValidationDataSimple,
-        },
-        profile: {
-          select: ProfileDataSimple,
-        },
-      },
-    });
+    const result: User = await this.userRepository.create(user);
 
     return result;
   }
 
-  async confirmAccount(id: number) {}
+  async confirmAccount(id: number) {
+    return this.userRepository.confirmAccount(id);
+  }
+
+  async findByEmailValidated(email: string) {
+    return this.userRepository.findByEmail(email);
+  }
 }

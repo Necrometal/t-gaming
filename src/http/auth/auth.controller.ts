@@ -1,7 +1,9 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from '@/http/auth/auth.service';
 import {
+  ChangePasswordDto,
   ConfirmAccountDto,
+  ConfirmResetPasswordDto,
   RegisterUserDto,
   ResendCodeDto,
   ResetPasswordDto,
@@ -52,5 +54,20 @@ export class AuthController {
     const result = await this.authService.resetPassword(user);
 
     return result;
+  }
+
+  @Post('confirm-reset-password')
+  async resetPasswordConfirm(@Body() code: ConfirmResetPasswordDto) {
+    const result = await this.authService.resetPasswordConfirm(code);
+
+    return {
+      message: 'Reset password validated successfully, please set new password',
+      data: result,
+    };
+  }
+
+  async changePassword(@Body() password: ChangePasswordDto) {
+    // const result = await this.authService.changePassword(password);
+    // return result;
   }
 }

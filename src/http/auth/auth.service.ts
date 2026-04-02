@@ -2,6 +2,7 @@ import { BadRequestException, ConflictException, Injectable } from '@nestjs/comm
 import { UsersService } from '@/http/global/users/users.service';
 import {
   ConfirmAccountDto,
+  ConfirmResetPasswordDto,
   CreateUserDto,
   LoginUserDto,
   ResendCodeDto,
@@ -28,6 +29,7 @@ import { UserConfirmedAccountEvent } from '@/events/class/UserConfirmedAccountEv
 import { UserRepositoryService } from '@/repositories/user-repository/user-repository.service';
 import { ValidationCodeRepositoryService } from '@/repositories/validation-code-repository/validation-code-repository.service';
 import { UserResetPasswordEvent } from '@/events/class/UserResetPasswordEvent';
+import { VALIDATION_CODE_TYPE_ACCOUNT } from '@/constantes/field-value';
 
 @Injectable()
 export class AuthService {
@@ -69,24 +71,12 @@ export class AuthService {
     };
   }
 
-  async confirmAccount(code: ConfirmAccountDto) {
-    const validationCode: ValidationCode = await this.crypto.decrypt(code.validationCodeToken);
-
-    // check if code expired
-    const result: ValidationCode | null = await this.validationCode.check(validationCode);
-
-    if (result && !result.used) {
-      await this.validationCode.use(result);
-      await this.userService.confirmAccount(result.user!.id);
-    } else if (result && result.used) {
-      throw new ConflictException('Code already used');
-    } else {
-      throw new BadRequestException('Invalid or expired code');
-    }
+  async confirmAccount(code: ConfirmAccountDto): Promise<boolean> {
+    const result = await this.validationCode.checkValidationCode(code);
 
     this.eventEmitter.emit(USER_CONFIRMED_ACCOUNT, new UserConfirmedAccountEvent(result.user!));
 
-    return result;
+    return true;
   }
 
   async resetPassword(userDto: ResetPasswordDto): Promise<UserResetPasswordResult> {
@@ -94,23 +84,29 @@ export class AuthService {
       validationCodeToken: '',
     };
 
-    const user = await this.userRepository.findByEmail(userDto.email);
+    const emailUser = await this.userRepository.findByEmail(userDto.email);
 
     /**
      * only handle if user exist
      * front should handle message if there is no validation code token
      */
-    if (user) {
-      const validationCode: ValidationCode = await this.validationCodeRepository.create(user);
-      response.validationCodeToken = await this.crypto.encrypt(validationCode!);
-
-      this.eventEmitter.emit(
-        USER_RESET_PASSWORD,
-        new UserResetPasswordEvent(user, validationCode!),
+    if (emailUser) {
+      const { user, ...rest }: ValidationCode = await this.validationCodeRepository.create(
+        emailUser,
+        VALIDATION_CODE_TYPE_ACCOUNT.resetPassword,
       );
+      response.validationCodeToken = await this.crypto.encrypt(rest!);
+      this.eventEmitter.emit(USER_RESET_PASSWORD, new UserResetPasswordEvent(user, rest!));
     }
 
     return response;
+  }
+
+  async resetPasswordConfirm(code: ConfirmResetPasswordDto): Promise<UserResetPasswordResult> {
+    await this.validationCode.checkValidationCode(code);
+    return {
+      validationCodeToken: code.validationCodeToken,
+    };
   }
 
   async login(credentials: LoginUserDto) {}

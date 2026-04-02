@@ -9,7 +9,7 @@ export type User = {
   createdAt?: string;
   updatedAt?: string;
   deletedAt?: string;
-  validationCode?: ValidationCode | null;
+  validationCode?: ValidationCode[];
   profile?: Profile | null;
 };
 
@@ -17,3 +17,5 @@ export type UserRegisteredResult = {
   user: User;
   validationCodeToken: string;
 };
+
+export type UserResetPasswordResult = Omit<UserRegisteredResult, 'user'>;

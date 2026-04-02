@@ -29,11 +29,13 @@ export type AggregateValidationCode = {
 export type ValidationCodeAvgAggregateOutputType = {
   id: number | null
   userId: number | null
+  type: number | null
 }
 
 export type ValidationCodeSumAggregateOutputType = {
   id: number | null
   userId: number | null
+  type: number | null
 }
 
 export type ValidationCodeMinAggregateOutputType = {
@@ -44,6 +46,7 @@ export type ValidationCodeMinAggregateOutputType = {
   updatedAt: Date | null
   expiredAt: Date | null
   used: boolean | null
+  type: number | null
 }
 
 export type ValidationCodeMaxAggregateOutputType = {
@@ -54,6 +57,7 @@ export type ValidationCodeMaxAggregateOutputType = {
   updatedAt: Date | null
   expiredAt: Date | null
   used: boolean | null
+  type: number | null
 }
 
 export type ValidationCodeCountAggregateOutputType = {
@@ -64,6 +68,7 @@ export type ValidationCodeCountAggregateOutputType = {
   updatedAt: number
   expiredAt: number
   used: number
+  type: number
   _all: number
 }
 
@@ -71,11 +76,13 @@ export type ValidationCodeCountAggregateOutputType = {
 export type ValidationCodeAvgAggregateInputType = {
   id?: true
   userId?: true
+  type?: true
 }
 
 export type ValidationCodeSumAggregateInputType = {
   id?: true
   userId?: true
+  type?: true
 }
 
 export type ValidationCodeMinAggregateInputType = {
@@ -86,6 +93,7 @@ export type ValidationCodeMinAggregateInputType = {
   updatedAt?: true
   expiredAt?: true
   used?: true
+  type?: true
 }
 
 export type ValidationCodeMaxAggregateInputType = {
@@ -96,6 +104,7 @@ export type ValidationCodeMaxAggregateInputType = {
   updatedAt?: true
   expiredAt?: true
   used?: true
+  type?: true
 }
 
 export type ValidationCodeCountAggregateInputType = {
@@ -106,6 +115,7 @@ export type ValidationCodeCountAggregateInputType = {
   updatedAt?: true
   expiredAt?: true
   used?: true
+  type?: true
   _all?: true
 }
 
@@ -203,6 +213,7 @@ export type ValidationCodeGroupByOutputType = {
   updatedAt: Date
   expiredAt: Date
   used: boolean
+  type: number
   _count: ValidationCodeCountAggregateOutputType | null
   _avg: ValidationCodeAvgAggregateOutputType | null
   _sum: ValidationCodeSumAggregateOutputType | null
@@ -236,6 +247,7 @@ export type ValidationCodeWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"ValidationCode"> | Date | string
   expiredAt?: Prisma.DateTimeFilter<"ValidationCode"> | Date | string
   used?: Prisma.BoolFilter<"ValidationCode"> | boolean
+  type?: Prisma.IntFilter<"ValidationCode"> | number
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
@@ -247,23 +259,25 @@ export type ValidationCodeOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   expiredAt?: Prisma.SortOrder
   used?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   _relevance?: Prisma.ValidationCodeOrderByRelevanceInput
 }
 
 export type ValidationCodeWhereUniqueInput = Prisma.AtLeast<{
   id?: number
-  userId?: number
   AND?: Prisma.ValidationCodeWhereInput | Prisma.ValidationCodeWhereInput[]
   OR?: Prisma.ValidationCodeWhereInput[]
   NOT?: Prisma.ValidationCodeWhereInput | Prisma.ValidationCodeWhereInput[]
+  userId?: Prisma.IntFilter<"ValidationCode"> | number
   code?: Prisma.StringFilter<"ValidationCode"> | string
   createdAt?: Prisma.DateTimeFilter<"ValidationCode"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ValidationCode"> | Date | string
   expiredAt?: Prisma.DateTimeFilter<"ValidationCode"> | Date | string
   used?: Prisma.BoolFilter<"ValidationCode"> | boolean
+  type?: Prisma.IntFilter<"ValidationCode"> | number
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-}, "id" | "userId">
+}, "id">
 
 export type ValidationCodeOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -273,6 +287,7 @@ export type ValidationCodeOrderByWithAggregationInput = {
   updatedAt?: Prisma.SortOrder
   expiredAt?: Prisma.SortOrder
   used?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   _count?: Prisma.ValidationCodeCountOrderByAggregateInput
   _avg?: Prisma.ValidationCodeAvgOrderByAggregateInput
   _max?: Prisma.ValidationCodeMaxOrderByAggregateInput
@@ -291,6 +306,7 @@ export type ValidationCodeScalarWhereWithAggregatesInput = {
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ValidationCode"> | Date | string
   expiredAt?: Prisma.DateTimeWithAggregatesFilter<"ValidationCode"> | Date | string
   used?: Prisma.BoolWithAggregatesFilter<"ValidationCode"> | boolean
+  type?: Prisma.IntWithAggregatesFilter<"ValidationCode"> | number
 }
 
 export type ValidationCodeCreateInput = {
@@ -299,6 +315,7 @@ export type ValidationCodeCreateInput = {
   updatedAt?: Date | string
   expiredAt: Date | string
   used?: boolean
+  type?: number
   user: Prisma.UserCreateNestedOneWithoutValidationCodeInput
 }
 
@@ -310,6 +327,7 @@ export type ValidationCodeUncheckedCreateInput = {
   updatedAt?: Date | string
   expiredAt: Date | string
   used?: boolean
+  type?: number
 }
 
 export type ValidationCodeUpdateInput = {
@@ -318,6 +336,7 @@ export type ValidationCodeUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   used?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.IntFieldUpdateOperationsInput | number
   user?: Prisma.UserUpdateOneRequiredWithoutValidationCodeNestedInput
 }
 
@@ -329,6 +348,7 @@ export type ValidationCodeUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   used?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ValidationCodeCreateManyInput = {
@@ -339,6 +359,7 @@ export type ValidationCodeCreateManyInput = {
   updatedAt?: Date | string
   expiredAt: Date | string
   used?: boolean
+  type?: number
 }
 
 export type ValidationCodeUpdateManyMutationInput = {
@@ -347,6 +368,7 @@ export type ValidationCodeUpdateManyMutationInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   used?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ValidationCodeUncheckedUpdateManyInput = {
@@ -357,11 +379,17 @@ export type ValidationCodeUncheckedUpdateManyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   used?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
-export type ValidationCodeNullableScalarRelationFilter = {
-  is?: Prisma.ValidationCodeWhereInput | null
-  isNot?: Prisma.ValidationCodeWhereInput | null
+export type ValidationCodeListRelationFilter = {
+  every?: Prisma.ValidationCodeWhereInput
+  some?: Prisma.ValidationCodeWhereInput
+  none?: Prisma.ValidationCodeWhereInput
+}
+
+export type ValidationCodeOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type ValidationCodeOrderByRelevanceInput = {
@@ -378,11 +406,13 @@ export type ValidationCodeCountOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
   expiredAt?: Prisma.SortOrder
   used?: Prisma.SortOrder
+  type?: Prisma.SortOrder
 }
 
 export type ValidationCodeAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  type?: Prisma.SortOrder
 }
 
 export type ValidationCodeMaxOrderByAggregateInput = {
@@ -393,6 +423,7 @@ export type ValidationCodeMaxOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
   expiredAt?: Prisma.SortOrder
   used?: Prisma.SortOrder
+  type?: Prisma.SortOrder
 }
 
 export type ValidationCodeMinOrderByAggregateInput = {
@@ -403,43 +434,55 @@ export type ValidationCodeMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
   expiredAt?: Prisma.SortOrder
   used?: Prisma.SortOrder
+  type?: Prisma.SortOrder
 }
 
 export type ValidationCodeSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  type?: Prisma.SortOrder
 }
 
-export type ValidationCodeCreateNestedOneWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.ValidationCodeCreateWithoutUserInput, Prisma.ValidationCodeUncheckedCreateWithoutUserInput>
-  connectOrCreate?: Prisma.ValidationCodeCreateOrConnectWithoutUserInput
-  connect?: Prisma.ValidationCodeWhereUniqueInput
+export type ValidationCodeCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.ValidationCodeCreateWithoutUserInput, Prisma.ValidationCodeUncheckedCreateWithoutUserInput> | Prisma.ValidationCodeCreateWithoutUserInput[] | Prisma.ValidationCodeUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.ValidationCodeCreateOrConnectWithoutUserInput | Prisma.ValidationCodeCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.ValidationCodeCreateManyUserInputEnvelope
+  connect?: Prisma.ValidationCodeWhereUniqueInput | Prisma.ValidationCodeWhereUniqueInput[]
 }
 
-export type ValidationCodeUncheckedCreateNestedOneWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.ValidationCodeCreateWithoutUserInput, Prisma.ValidationCodeUncheckedCreateWithoutUserInput>
-  connectOrCreate?: Prisma.ValidationCodeCreateOrConnectWithoutUserInput
-  connect?: Prisma.ValidationCodeWhereUniqueInput
+export type ValidationCodeUncheckedCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.ValidationCodeCreateWithoutUserInput, Prisma.ValidationCodeUncheckedCreateWithoutUserInput> | Prisma.ValidationCodeCreateWithoutUserInput[] | Prisma.ValidationCodeUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.ValidationCodeCreateOrConnectWithoutUserInput | Prisma.ValidationCodeCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.ValidationCodeCreateManyUserInputEnvelope
+  connect?: Prisma.ValidationCodeWhereUniqueInput | Prisma.ValidationCodeWhereUniqueInput[]
 }
 
-export type ValidationCodeUpdateOneWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.ValidationCodeCreateWithoutUserInput, Prisma.ValidationCodeUncheckedCreateWithoutUserInput>
-  connectOrCreate?: Prisma.ValidationCodeCreateOrConnectWithoutUserInput
-  upsert?: Prisma.ValidationCodeUpsertWithoutUserInput
-  disconnect?: Prisma.ValidationCodeWhereInput | boolean
-  delete?: Prisma.ValidationCodeWhereInput | boolean
-  connect?: Prisma.ValidationCodeWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ValidationCodeUpdateToOneWithWhereWithoutUserInput, Prisma.ValidationCodeUpdateWithoutUserInput>, Prisma.ValidationCodeUncheckedUpdateWithoutUserInput>
+export type ValidationCodeUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.ValidationCodeCreateWithoutUserInput, Prisma.ValidationCodeUncheckedCreateWithoutUserInput> | Prisma.ValidationCodeCreateWithoutUserInput[] | Prisma.ValidationCodeUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.ValidationCodeCreateOrConnectWithoutUserInput | Prisma.ValidationCodeCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.ValidationCodeUpsertWithWhereUniqueWithoutUserInput | Prisma.ValidationCodeUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.ValidationCodeCreateManyUserInputEnvelope
+  set?: Prisma.ValidationCodeWhereUniqueInput | Prisma.ValidationCodeWhereUniqueInput[]
+  disconnect?: Prisma.ValidationCodeWhereUniqueInput | Prisma.ValidationCodeWhereUniqueInput[]
+  delete?: Prisma.ValidationCodeWhereUniqueInput | Prisma.ValidationCodeWhereUniqueInput[]
+  connect?: Prisma.ValidationCodeWhereUniqueInput | Prisma.ValidationCodeWhereUniqueInput[]
+  update?: Prisma.ValidationCodeUpdateWithWhereUniqueWithoutUserInput | Prisma.ValidationCodeUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.ValidationCodeUpdateManyWithWhereWithoutUserInput | Prisma.ValidationCodeUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.ValidationCodeScalarWhereInput | Prisma.ValidationCodeScalarWhereInput[]
 }
 
-export type ValidationCodeUncheckedUpdateOneWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.ValidationCodeCreateWithoutUserInput, Prisma.ValidationCodeUncheckedCreateWithoutUserInput>
-  connectOrCreate?: Prisma.ValidationCodeCreateOrConnectWithoutUserInput
-  upsert?: Prisma.ValidationCodeUpsertWithoutUserInput
-  disconnect?: Prisma.ValidationCodeWhereInput | boolean
-  delete?: Prisma.ValidationCodeWhereInput | boolean
-  connect?: Prisma.ValidationCodeWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ValidationCodeUpdateToOneWithWhereWithoutUserInput, Prisma.ValidationCodeUpdateWithoutUserInput>, Prisma.ValidationCodeUncheckedUpdateWithoutUserInput>
+export type ValidationCodeUncheckedUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.ValidationCodeCreateWithoutUserInput, Prisma.ValidationCodeUncheckedCreateWithoutUserInput> | Prisma.ValidationCodeCreateWithoutUserInput[] | Prisma.ValidationCodeUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.ValidationCodeCreateOrConnectWithoutUserInput | Prisma.ValidationCodeCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.ValidationCodeUpsertWithWhereUniqueWithoutUserInput | Prisma.ValidationCodeUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.ValidationCodeCreateManyUserInputEnvelope
+  set?: Prisma.ValidationCodeWhereUniqueInput | Prisma.ValidationCodeWhereUniqueInput[]
+  disconnect?: Prisma.ValidationCodeWhereUniqueInput | Prisma.ValidationCodeWhereUniqueInput[]
+  delete?: Prisma.ValidationCodeWhereUniqueInput | Prisma.ValidationCodeWhereUniqueInput[]
+  connect?: Prisma.ValidationCodeWhereUniqueInput | Prisma.ValidationCodeWhereUniqueInput[]
+  update?: Prisma.ValidationCodeUpdateWithWhereUniqueWithoutUserInput | Prisma.ValidationCodeUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.ValidationCodeUpdateManyWithWhereWithoutUserInput | Prisma.ValidationCodeUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.ValidationCodeScalarWhereInput | Prisma.ValidationCodeScalarWhereInput[]
 }
 
 export type BoolFieldUpdateOperationsInput = {
@@ -452,6 +495,7 @@ export type ValidationCodeCreateWithoutUserInput = {
   updatedAt?: Date | string
   expiredAt: Date | string
   used?: boolean
+  type?: number
 }
 
 export type ValidationCodeUncheckedCreateWithoutUserInput = {
@@ -461,6 +505,7 @@ export type ValidationCodeUncheckedCreateWithoutUserInput = {
   updatedAt?: Date | string
   expiredAt: Date | string
   used?: boolean
+  type?: number
 }
 
 export type ValidationCodeCreateOrConnectWithoutUserInput = {
@@ -468,15 +513,49 @@ export type ValidationCodeCreateOrConnectWithoutUserInput = {
   create: Prisma.XOR<Prisma.ValidationCodeCreateWithoutUserInput, Prisma.ValidationCodeUncheckedCreateWithoutUserInput>
 }
 
-export type ValidationCodeUpsertWithoutUserInput = {
-  update: Prisma.XOR<Prisma.ValidationCodeUpdateWithoutUserInput, Prisma.ValidationCodeUncheckedUpdateWithoutUserInput>
-  create: Prisma.XOR<Prisma.ValidationCodeCreateWithoutUserInput, Prisma.ValidationCodeUncheckedCreateWithoutUserInput>
-  where?: Prisma.ValidationCodeWhereInput
+export type ValidationCodeCreateManyUserInputEnvelope = {
+  data: Prisma.ValidationCodeCreateManyUserInput | Prisma.ValidationCodeCreateManyUserInput[]
+  skipDuplicates?: boolean
 }
 
-export type ValidationCodeUpdateToOneWithWhereWithoutUserInput = {
-  where?: Prisma.ValidationCodeWhereInput
+export type ValidationCodeUpsertWithWhereUniqueWithoutUserInput = {
+  where: Prisma.ValidationCodeWhereUniqueInput
+  update: Prisma.XOR<Prisma.ValidationCodeUpdateWithoutUserInput, Prisma.ValidationCodeUncheckedUpdateWithoutUserInput>
+  create: Prisma.XOR<Prisma.ValidationCodeCreateWithoutUserInput, Prisma.ValidationCodeUncheckedCreateWithoutUserInput>
+}
+
+export type ValidationCodeUpdateWithWhereUniqueWithoutUserInput = {
+  where: Prisma.ValidationCodeWhereUniqueInput
   data: Prisma.XOR<Prisma.ValidationCodeUpdateWithoutUserInput, Prisma.ValidationCodeUncheckedUpdateWithoutUserInput>
+}
+
+export type ValidationCodeUpdateManyWithWhereWithoutUserInput = {
+  where: Prisma.ValidationCodeScalarWhereInput
+  data: Prisma.XOR<Prisma.ValidationCodeUpdateManyMutationInput, Prisma.ValidationCodeUncheckedUpdateManyWithoutUserInput>
+}
+
+export type ValidationCodeScalarWhereInput = {
+  AND?: Prisma.ValidationCodeScalarWhereInput | Prisma.ValidationCodeScalarWhereInput[]
+  OR?: Prisma.ValidationCodeScalarWhereInput[]
+  NOT?: Prisma.ValidationCodeScalarWhereInput | Prisma.ValidationCodeScalarWhereInput[]
+  id?: Prisma.IntFilter<"ValidationCode"> | number
+  userId?: Prisma.IntFilter<"ValidationCode"> | number
+  code?: Prisma.StringFilter<"ValidationCode"> | string
+  createdAt?: Prisma.DateTimeFilter<"ValidationCode"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"ValidationCode"> | Date | string
+  expiredAt?: Prisma.DateTimeFilter<"ValidationCode"> | Date | string
+  used?: Prisma.BoolFilter<"ValidationCode"> | boolean
+  type?: Prisma.IntFilter<"ValidationCode"> | number
+}
+
+export type ValidationCodeCreateManyUserInput = {
+  id?: number
+  code: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  expiredAt: Date | string
+  used?: boolean
+  type?: number
 }
 
 export type ValidationCodeUpdateWithoutUserInput = {
@@ -485,6 +564,7 @@ export type ValidationCodeUpdateWithoutUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   used?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ValidationCodeUncheckedUpdateWithoutUserInput = {
@@ -494,6 +574,17 @@ export type ValidationCodeUncheckedUpdateWithoutUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   used?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.IntFieldUpdateOperationsInput | number
+}
+
+export type ValidationCodeUncheckedUpdateManyWithoutUserInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  used?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -506,6 +597,7 @@ export type ValidationCodeSelect<ExtArgs extends runtime.Types.Extensions.Intern
   updatedAt?: boolean
   expiredAt?: boolean
   used?: boolean
+  type?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["validationCode"]>
 
@@ -519,9 +611,10 @@ export type ValidationCodeSelectScalar = {
   updatedAt?: boolean
   expiredAt?: boolean
   used?: boolean
+  type?: boolean
 }
 
-export type ValidationCodeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "code" | "createdAt" | "updatedAt" | "expiredAt" | "used", ExtArgs["result"]["validationCode"]>
+export type ValidationCodeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "code" | "createdAt" | "updatedAt" | "expiredAt" | "used" | "type", ExtArgs["result"]["validationCode"]>
 export type ValidationCodeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -539,6 +632,7 @@ export type $ValidationCodePayload<ExtArgs extends runtime.Types.Extensions.Inte
     updatedAt: Date
     expiredAt: Date
     used: boolean
+    type: number
   }, ExtArgs["result"]["validationCode"]>
   composites: {}
 }
@@ -916,6 +1010,7 @@ export interface ValidationCodeFieldRefs {
   readonly updatedAt: Prisma.FieldRef<"ValidationCode", 'DateTime'>
   readonly expiredAt: Prisma.FieldRef<"ValidationCode", 'DateTime'>
   readonly used: Prisma.FieldRef<"ValidationCode", 'Boolean'>
+  readonly type: Prisma.FieldRef<"ValidationCode", 'Int'>
 }
     
 

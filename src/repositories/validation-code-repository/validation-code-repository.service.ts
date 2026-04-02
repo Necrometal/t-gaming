@@ -1,8 +1,9 @@
+import { VALIDATION_CODE_TYPE_ACCOUNT, ValidationCodeType } from '@/constantes/field-value';
 import { CODE_DURATION } from '@/constantes/global';
 import { dateAfter } from '@/helpers/helpers.date';
 import { generateNumber } from '@/helpers/helpers.number';
 import { ProfileDataSimple, UserDataSimple, ValidationDataSimple } from '@/http/global/fragments';
-import { ValidationCode } from '@/http/model';
+import { User, ValidationCode } from '@/http/model';
 import { PrismaService } from '@/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { env } from 'prisma/config';
@@ -11,7 +12,33 @@ import { env } from 'prisma/config';
 export class ValidationCodeRepositoryService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async update(validation: ValidationCode): Promise<ValidationCode> {
+  async create(user: User, type: ValidationCodeType = VALIDATION_CODE_TYPE_ACCOUNT.register) {
+    return this.prisma.validationCode.create({
+      data: {
+        expiredAt: dateAfter(new Date(), parseInt(env(CODE_DURATION))),
+        code: generateNumber(6, true) as string,
+        type,
+        user: {
+          connect: {
+            id: user.id,
+          },
+        },
+      },
+      select: {
+        ...ValidationDataSimple,
+        user: {
+          select: {
+            ...UserDataSimple,
+            profile: {
+              select: ProfileDataSimple,
+            },
+          },
+        },
+      },
+    });
+  }
+
+  async updateWithReturnUser(validation: ValidationCode): Promise<ValidationCode> {
     return this.prisma.validationCode.update({
       where: {
         id: validation.id,

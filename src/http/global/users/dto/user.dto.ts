@@ -71,3 +71,35 @@ export class ConfirmAccountDto {
   @IsNotEmpty()
   code: string;
 }
+
+export class ResetPasswordDto {
+  @IsString()
+  @IsNotEmpty()
+  @IsEmail()
+  email: string;
+}
+
+export class ConfirmResetPasswordDto {
+  @IsString()
+  @IsNotEmpty()
+  validationCodeToken: string;
+
+  @IsString()
+  @IsNotEmpty()
+  code: string;
+}
+
+export class ChangePasswordDto {
+  @IsNotEmpty()
+  @IsString()
+  @IsNotEmpty()
+  validationCodeToken: string;
+
+  @IsString()
+  @IsNotEmpty()
+  password: string;
+
+  @IsString()
+  @IsNotEmpty()
+  confirmPassword: string;
+}

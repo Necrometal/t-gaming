@@ -1,3 +1,4 @@
+import { VALIDATION_CODE_TYPE_ACCOUNT } from '@/constantes/field-value';
 import { CODE_DURATION } from '@/constantes/global';
 import { dateAfter } from '@/helpers/helpers.date';
 import { generateNumber } from '@/helpers/helpers.number';
@@ -30,6 +31,7 @@ export class UserRepositoryService {
           create: {
             expiredAt: dateAfter(new Date(), parseInt(env(CODE_DURATION))),
             code: generateNumber(6, true) as string,
+            type: VALIDATION_CODE_TYPE_ACCOUNT.register,
           },
         },
         profile: {
@@ -43,11 +45,37 @@ export class UserRepositoryService {
         ...UserDataSimple,
         validationCode: {
           select: ValidationDataSimple,
+          where: {
+            type: VALIDATION_CODE_TYPE_ACCOUNT.register,
+          },
+          orderBy: {
+            createdAt: 'desc',
+          },
+          take: 1,
         },
         profile: {
           select: ProfileDataSimple,
         },
       },
+    });
+  }
+
+  async findByEmail(email: string): Promise<User | null> {
+    return this.prisma.user.findFirst({
+      where: {
+        email,
+      },
+      select: {
+        ...UserDataSimple,
+        validateAt: true,
+      },
+    });
+  }
+
+  async confirmAccount(id: number) {
+    return this.prisma.user.update({
+      where: { id },
+      data: { validateAt: new Date() },
     });
   }
 }

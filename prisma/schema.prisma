@@ -14,14 +14,14 @@ datasource db {
 }
 
 model User {
-  id             Int             @id @default(autoincrement())
-  email          String          @unique
+  id             Int              @id @default(autoincrement())
+  email          String           @unique
   password       String
   roleId         Int
-  role           Role            @relation(fields: [roleId], references: [id])
+  role           Role             @relation(fields: [roleId], references: [id])
   profile        Profile?
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @default(now())
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @default(now())
   deletedAt      DateTime?
   validateAt     DateTime?
   validationCode ValidationCode[]
@@ -50,12 +50,12 @@ model Role {
 
 model ValidationCode {
   id        Int      @id @default(autoincrement())
-  userId    Int      @unique
+  userId    Int       
   user      User     @relation(fields: [userId], references: [id])
   code      String   @db.Char(6)
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
   expiredAt DateTime
   used      Boolean  @default(false)
-  type Int    @default(1)
+  type      Int      @default(1)
 }
