@@ -5,15 +5,29 @@ import {
   CreateUserDto,
   LoginUserDto,
   ResendCodeDto,
+  ResetPasswordDto,
 } from '@/http/global/users/dto/user.dto';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { USER_CONFIRMED_ACCOUNT, USER_REGISTERED, USER_RESEND_CODE } from '@/constantes/event';
+import {
+  USER_CONFIRMED_ACCOUNT,
+  USER_REGISTERED,
+  USER_RESEND_CODE,
+  USER_RESET_PASSWORD,
+} from '@/constantes/event';
 import { UserRegisteredEvent } from '@/events/class/UserRegisteredEvent';
 import { CryptoService } from '@/modules/crypto/crypto.service';
-import { ResendCodeResult, UserRegisteredResult, ValidationCode } from '@/http/model';
+import {
+  ResendCodeResult,
+  UserRegisteredResult,
+  UserResetPasswordResult,
+  ValidationCode,
+} from '@/http/model';
 import { ValidationCodeService } from '@/http/global/validation-code/validation-code.service';
 import { ResendCodeEvent } from '@/events/class/ResendCodeEvent';
 import { UserConfirmedAccountEvent } from '@/events/class/UserConfirmedAccountEvent';
+import { UserRepositoryService } from '@/repositories/user-repository/user-repository.service';
+import { ValidationCodeRepositoryService } from '@/repositories/validation-code-repository/validation-code-repository.service';
+import { UserResetPasswordEvent } from '@/events/class/UserResetPasswordEvent';
 
 @Injectable()
 export class AuthService {
@@ -23,6 +37,8 @@ export class AuthService {
     private readonly crypto: CryptoService,
     private readonly validationCode: ValidationCodeService,
     private readonly userService: UsersService,
+    private readonly userRepository: UserRepositoryService,
+    private readonly validationCodeRepository: ValidationCodeRepositoryService,
   ) {}
 
   async register(userDto: CreateUserDto): Promise<UserRegisteredResult> {
@@ -30,7 +46,7 @@ export class AuthService {
       const { validationCode, profile, ...user } = await this.usersService.createUser(userDto);
       this.eventEmitter.emit(
         USER_REGISTERED,
-        new UserRegisteredEvent({ ...user, profile }, validationCode!),
+        new UserRegisteredEvent({ ...user, profile }, validationCode![0]),
       );
       return {
         user,
@@ -43,6 +59,7 @@ export class AuthService {
 
   async resendCode(codeDto: ResendCodeDto): Promise<ResendCodeResult> {
     const validationCode: ValidationCode = await this.crypto.decrypt(codeDto.validationCodeToken);
+
     const { user, ...code } = await this.validationCode.update(validationCode);
 
     this.eventEmitter.emit(USER_RESEND_CODE, new ResendCodeEvent(user!, { ...code }));
@@ -70,6 +87,30 @@ export class AuthService {
     this.eventEmitter.emit(USER_CONFIRMED_ACCOUNT, new UserConfirmedAccountEvent(result.user!));
 
     return result;
+  }
+
+  async resetPassword(userDto: ResetPasswordDto): Promise<UserResetPasswordResult> {
+    const response = {
+      validationCodeToken: '',
+    };
+
+    const user = await this.userRepository.findByEmail(userDto.email);
+
+    /**
+     * only handle if user exist
+     * front should handle message if there is no validation code token
+     */
+    if (user) {
+      const validationCode: ValidationCode = await this.validationCodeRepository.create(user);
+      response.validationCodeToken = await this.crypto.encrypt(validationCode!);
+
+      this.eventEmitter.emit(
+        USER_RESET_PASSWORD,
+        new UserResetPasswordEvent(user, validationCode!),
+      );
+    }
+
+    return response;
   }
 
   async login(credentials: LoginUserDto) {}

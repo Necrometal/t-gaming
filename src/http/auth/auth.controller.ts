@@ -4,6 +4,7 @@ import {
   ConfirmAccountDto,
   RegisterUserDto,
   ResendCodeDto,
+  ResetPasswordDto,
 } from '@/http/global/users/dto/user.dto';
 import { RolesService } from '@/http/global/roles/roles.service';
 import { ROLE_USER } from '@/constantes/role';
@@ -39,10 +40,17 @@ export class AuthController {
 
   @Post('confirm-account')
   async confirmAccount(@Body() code: ConfirmAccountDto) {
-    const result = await this.authService.confirmAccount(code);
+    await this.authService.confirmAccount(code);
 
     return {
       message: 'Account validate successfully',
     };
+  }
+
+  @Post('reset-password')
+  async resetPassword(@Body() user: ResetPasswordDto) {
+    const result = await this.authService.resetPassword(user);
+
+    return result;
   }
 }

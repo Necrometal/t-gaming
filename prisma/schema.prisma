@@ -24,7 +24,7 @@ model User {
   updatedAt      DateTime        @default(now())
   deletedAt      DateTime?
   validateAt     DateTime?
-  validationCode ValidationCode?
+  validationCode ValidationCode[]
 }
 
 model Profile {
@@ -57,4 +57,5 @@ model ValidationCode {
   updatedAt DateTime @default(now())
   expiredAt DateTime
   used      Boolean  @default(false)
+  type Int    @default(1)
 }

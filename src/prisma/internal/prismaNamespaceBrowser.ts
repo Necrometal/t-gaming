@@ -119,7 +119,8 @@ export const ValidationCodeScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   expiredAt: 'expiredAt',
-  used: 'used'
+  used: 'used',
+  type: 'type'
 } as const
 
 export type ValidationCodeScalarFieldEnum = (typeof ValidationCodeScalarFieldEnum)[keyof typeof ValidationCodeScalarFieldEnum]
