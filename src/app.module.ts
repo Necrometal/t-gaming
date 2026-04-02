@@ -12,28 +12,24 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { EventsListenerModule } from '@/modules/events-listener/events-listener.module';
 import { CryptoModule } from '@/modules/crypto/crypto.module';
 import { ValidationCodeModule } from '@/http/global/validation-code/validation-code.module';
-import { I18nModule } from 'nestjs-i18n';
-import * as path from 'path';
+import { RepositoryModuleModule } from '@/modules/repository-module/repository-module.module';
+import i18nConfig from '@/configs/i18n';
+
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
     CqrsModule.forRoot(),
     EventEmitterModule.forRoot(),
-    RolesModule,
+    i18nConfig(),
     PrismaModule,
+    RepositoryModuleModule,
+    RolesModule,
     UsersModule,
     AuthModule,
     MailModule,
     EventsListenerModule,
     CryptoModule,
     ValidationCodeModule,
-    I18nModule.forRoot({
-      fallbackLanguage: 'en',
-      loaderOptions: {
-        path: path.join(__dirname, '/i18n/'),
-        watch: true,
-      },
-    }),
   ],
   controllers: [],
   providers: [

@@ -1,79 +1,57 @@
-import { CODE_DURATION } from '@/constantes/global';
-import { dateAfter } from '@/helpers/helpers.date';
-import { generateNumber } from '@/helpers/helpers.number';
 import { ValidationCode } from '@/http/model';
 import { PrismaService } from '@/prisma.service';
-import { Injectable } from '@nestjs/common';
-import { env } from 'prisma/config';
-import { UserDataSimple, ProfileDataSimple, ValidationDataSimple } from '@/http/global/fragments';
+import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
+import { ValidationCodeRepositoryService } from '@/repositories/validation-code-repository/validation-code-repository.service';
+import { UsersService } from '@/http/global/users/users.service';
+import { ConfirmResetPasswordDto } from '@/http/global/users/dto/user.dto';
+import { CryptoService } from '@/modules/crypto/crypto.service';
 
 @Injectable()
 export class ValidationCodeService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly validationCodeRepository: ValidationCodeRepositoryService,
+    private readonly userService: UsersService,
+    private readonly crypto: CryptoService,
+  ) {}
 
   async update(validation: ValidationCode): Promise<ValidationCode> {
-    const result = await this.prisma.validationCode.update({
-      where: {
-        id: validation.id,
-      },
-      data: {
-        code: generateNumber(6, true) as string,
-        expiredAt: dateAfter(new Date(), parseInt(env(CODE_DURATION))),
-      },
-      select: {
-        ...ValidationDataSimple,
-        user: {
-          select: {
-            ...UserDataSimple,
-            profile: {
-              select: ProfileDataSimple,
-            },
-          },
-        },
-      },
-    });
-
+    const result = await this.validationCodeRepository.updateWithReturnUser(validation);
     return result;
   }
 
   async check(validation: ValidationCode): Promise<ValidationCode | null> {
-    const result: ValidationCode | null = await this.prisma.validationCode.findFirst({
-      where: {
-        AND: [
-          {
-            expiredAt: {
-              gt: new Date(),
-            },
-          },
-          {
-            id: validation.id,
-            code: validation.code,
-          },
-        ],
-      },
-      select: {
-        id: true,
-        used: true,
-        user: {
-          select: {
-            ...UserDataSimple,
-            profile: {
-              select: ProfileDataSimple,
-            },
-          },
-        },
-      },
-    });
-
+    const result: ValidationCode | null = await this.validationCodeRepository.check(validation);
     return result;
   }
 
   async use(validation: ValidationCode) {
-    await this.prisma.validationCode.update({
-      where: { id: validation.id },
-      data: {
-        used: true,
-      },
-    });
+    await this.validationCodeRepository.use(validation);
+  }
+
+  async checkValidationCode(code: ConfirmResetPasswordDto) {
+    const validationCode: ValidationCode = await this.crypto.decrypt(code.validationCodeToken);
+    // check if code expired
+    const result: ValidationCode | null = await this.check(validationCode);
+    if (result && !result.used) {
+      await this.use(result);
+      await this.userService.confirmAccount(result.user!.id);
+    } else if (result && result.used) {
+      throw new ConflictException('Code already used');
+    } else {
+      throw new BadRequestException('Invalid or expired code');
+    }
+
+    return result;
+  }
+
+  async getValidationCodeByToken(token: string): Promise<ValidationCode> {
+    const validationCode: ValidationCode = await this.crypto.decrypt(token);
+    const result = await this.validationCodeRepository.getValidationCodeById(validationCode.id);
+    if (!result) {
+      throw new BadRequestException('Invalid validation code token');
+    }
+
+    return result;
   }
 }
