@@ -1,4 +1,13 @@
-import { IsNotEmpty, IsString, MinLength, MaxLength, IsInt, IsEmail } from 'class-validator';
+import { Match } from '@/helpers/decorator/match/match.decorator';
+import {
+  IsNotEmpty,
+  IsString,
+  MinLength,
+  MaxLength,
+  IsInt,
+  IsEmail,
+  Matches,
+} from 'class-validator';
 export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
@@ -97,9 +106,14 @@ export class ChangePasswordDto {
 
   @IsString()
   @IsNotEmpty()
+  @MinLength(8)
+  @MaxLength(16)
   password: string;
 
   @IsString()
   @IsNotEmpty()
-  confirmPassword: string;
+  @MinLength(8)
+  @MaxLength(16)
+  @Match('password', { message: 'Password confirmation does not match' })
+  passwordConfirm: string;
 }
